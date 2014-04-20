@@ -40,7 +40,7 @@ def main(stdscr):
 		stdscr.refresh()
 		time.sleep(UPDATE_DELAY)
 
-if __name__ == "__main__":
+def start():
 	try:
 		curses.wrapper(main)
 	except KeyboardInterrupt:
