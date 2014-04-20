@@ -14,6 +14,11 @@ Installing pmatrix is easy. If you're running a UNIX system, you can follow thes
 4. if you have sudo installed, log in as a sudoer and execute the setup.py file with sudo. `$ sudo setup.py install`
 5. Done! It should now be a simple case of executing `$ pmatrix` in your favorite terminal emulator.
 
+pmatrix in Action
+=================
+
+![](images/action.png)
+
 TODO
 ====
 
