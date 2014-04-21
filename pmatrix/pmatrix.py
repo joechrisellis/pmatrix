@@ -25,20 +25,22 @@ def main(stdscr):
 	curses.start_color()
 
 	back = [rand_string(string.printable.strip(), curses.COLS) for i in xrange(curses.LINES)]
-	dispense = [False for i in xrange(curses.COLS)]
+	dispense = []
 	visible = []
 	
 	while 1:
 		stdscr.clear()
 
 		for i in xrange(LETTERS_PER_UPDATE):
-			dispense[random.randint(0, len(dispense) - 1)] = True
+			dispense.append([0, random.randint(0, curses.COLS - 1)])
 
 		for c in enumerate(dispense):
-			if c[1]:
-				visible.append([0, c[0]])
+			# here we copy the list with [:]. otherwise, we can't
+			# delete from dispense without deleting from visible
+			# (python reference problems)
+			visible.append(c[1][:])
 			if not random.randint(0, 5):
-				dispense[c[0]] = False
+				del dispense[c[0]]
 
 		for c in enumerate(visible):
 			if c[1][0] < curses.LINES - 1:
