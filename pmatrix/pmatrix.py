@@ -34,22 +34,22 @@ def main(stdscr):
 		for i in xrange(LETTERS_PER_UPDATE):
 			dispense.append([0, random.randint(0, curses.COLS - 1)])
 
-		for c in enumerate(dispense):
+		for i, c in enumerate(dispense):
 			# here we copy the list with [:]. otherwise, we can't
 			# delete from dispense without deleting from visible
 			# (python reference problems)
-			visible.append(c[1][:])
+			visible.append(c[:])
 			if not random.randint(0, 5):
-				del dispense[c[0]]
+				del dispense[i]
 
-		for c in enumerate(visible):
-			if c[1][0] < curses.LINES - 1:
-				stdscr.addstr(c[1][0], c[1][1], back[c[1][0]][c[1][1]], curses.color_pair(9))
-				c[1][0] += 1
+		for i, c in enumerate(visible):
+			if c[0] < curses.LINES - 1:
+				stdscr.addstr(c[0], c[1], back[c[0]][c[1]], curses.color_pair(9))
+				c[0] += 1
 			else:
 				# can't use del obj since it's not a reference to the
 				# list, but instead a copy. we have to delete by index.
-				del visible[c[0]]
+				del visible[i]
 
 		stdscr.refresh()
 		time.sleep(UPDATE_DELAY)
