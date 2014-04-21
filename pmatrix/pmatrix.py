@@ -1,8 +1,8 @@
 import curses
 import optparse
 import random
-import string
-import time
+from string import printable
+from time import sleep
 
 COLOR = curses.COLOR_GREEN
 COLORS = {
@@ -23,27 +23,28 @@ def main(stdscr):
 	curses.curs_set(0)
 	curses.init_pair(9, COLOR, curses.COLOR_BLACK)
 	curses.start_color()
+	initial_size = stdscr.getmaxyx()
 
-	back = [rand_string(string.printable.strip(), curses.COLS) for i in xrange(curses.LINES)]
-	dispense = []
-	visible = []
+	back = [rand_string(printable.strip(), initial_size[1]) for i in xrange(initial_size[0])]
+	dispense, visible = [], []
 	
 	while 1:
+		size = stdscr.getmaxyx()
+		if size != initial_size:
+			return # returns back to start()
+
 		stdscr.clear()
 
 		for i in xrange(LETTERS_PER_UPDATE):
-			dispense.append([0, random.randint(0, curses.COLS - 1)])
+			dispense.append(random.randint(0, size[1] - 1))
 
 		for i, c in enumerate(dispense):
-			# here we copy the list with [:]. otherwise, we can't
-			# delete from dispense without deleting from visible
-			# (python reference problems)
-			visible.append(c[:])
+			visible.append([0, c])
 			if not random.randint(0, 5):
 				del dispense[i]
 
 		for i, c in enumerate(visible):
-			if c[0] < curses.LINES - 1:
+			if c[0] < size[0] - 1:
 				stdscr.addstr(c[0], c[1], back[c[0]][c[1]], curses.color_pair(9))
 				c[0] += 1
 			else:
@@ -52,7 +53,7 @@ def main(stdscr):
 				del visible[i]
 
 		stdscr.refresh()
-		time.sleep(UPDATE_DELAY)
+		sleep(UPDATE_DELAY)
 
 def start():
 	parser = optparse.OptionParser()
@@ -70,7 +71,7 @@ def start():
 	UPDATE_DELAY = abs(options.delay)
 
 	try:
-		curses.wrapper(main)
+		while 1: curses.wrapper(main)
 	except KeyboardInterrupt:
 		exit(0)
 
