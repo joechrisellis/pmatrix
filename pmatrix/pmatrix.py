@@ -1,7 +1,18 @@
 import curses
+import optparse
 import random
 import string
 import time
+
+COLOR = curses.COLOR_GREEN
+COLORS = {
+	"GREEN" : curses.COLOR_GREEN,
+	"RED" : curses.COLOR_RED,
+	"YELLOW" : curses.COLOR_YELLOW,
+	"GREEN" : curses.COLOR_GREEN,
+	"GREEN" : curses.COLOR_GREEN,
+	"GREEN" : curses.COLOR_GREEN,
+}
 
 LETTERS_PER_UPDATE = 2
 UPDATE_DELAY = 0.03
@@ -9,7 +20,7 @@ rand_string = lambda c, l: "".join(random.choice(c) for i in xrange(l))
 
 def main(stdscr):
 	curses.curs_set(0)
-	curses.init_pair(9, curses.COLOR_GREEN, curses.COLOR_BLACK)
+	curses.init_pair(9, COLOR, curses.COLOR_BLACK)
 	curses.start_color()
 
 	back = [rand_string(string.printable.strip(), curses.COLS) for i in xrange(curses.LINES)]
@@ -41,7 +52,24 @@ def main(stdscr):
 		time.sleep(UPDATE_DELAY)
 
 def start():
+	parser = optparse.OptionParser()
+	parser.add_option("-c", "--color", default="green",
+			help="The colour of the falling text.")
+	parser.add_option("-d", "--delay", type=float, default=0.03,
+			help="The update delay.")
+	parser.add_option("-l", "--letters", type=int, default=2,
+			help="The number of letters produced per update.")
+	options, args = parser.parse_args()
+
+	global COLOR, LETTERS_PER_UPDATE, UPDATE_DELAY
+	COLOR = COLORS.get(options.color.upper(), curses.COLOR_GREEN)
+	LETTERS_PER_UPDATE = abs(options.letters)
+	UPDATE_DELAY = abs(options.delay)
+
 	try:
 		curses.wrapper(main)
 	except KeyboardInterrupt:
 		exit(0)
+
+if __name__ == "__main__":
+	start()
