@@ -6,12 +6,13 @@ import time
 
 COLOR = curses.COLOR_GREEN
 COLORS = {
+	"BLUE" : curses.COLOR_BLUE,
+	"CYAN" : curses.COLOR_CYAN,
 	"GREEN" : curses.COLOR_GREEN,
+	"MAGENTA" : curses.COLOR_MAGENTA,
 	"RED" : curses.COLOR_RED,
+	"WHITE" : curses.COLOR_WHITE,
 	"YELLOW" : curses.COLOR_YELLOW,
-	"GREEN" : curses.COLOR_GREEN,
-	"GREEN" : curses.COLOR_GREEN,
-	"GREEN" : curses.COLOR_GREEN,
 }
 
 LETTERS_PER_UPDATE = 2
