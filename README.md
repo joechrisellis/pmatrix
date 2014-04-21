@@ -22,5 +22,4 @@ pmatrix in Action
 TODO
 ====
 
-* Add command line options to change colour, increase speed, etc.
 * Allow the terminal width and height to be modified during execution.
