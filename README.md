@@ -22,4 +22,4 @@ pmatrix in Action
 TODO
 ====
 
-* Allow the terminal width and height to be modified during execution.
+* Work on efficiency. You will always have to expect some overhead with Python and accept the fact that pmatrix will never be as fast as cmatrix.
