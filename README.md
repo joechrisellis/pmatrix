@@ -23,3 +23,4 @@ TODO
 ====
 
 * Work on efficiency. You will always have to expect some overhead with Python and accept the fact that pmatrix will never be as fast as cmatrix.
+* Parallelize loops.

@@ -25,9 +25,14 @@ def main(stdscr):
 	back = rand_string(printable.strip(), size[0] * size[1])
 	dispense, visible = [], []
 
-	lt = time.time()
 	delta = 0
+	lt = time.time()
 	while 1:
+		if ERASE:
+			stdscr.erase()
+		else:
+			stdscr.clear()
+
 		now = time.time()
 		delta += (now - lt) * UPDATES_PER_SECOND
 		lt = now
@@ -56,11 +61,6 @@ def main(stdscr):
 
 			delta -= 1
 			stdscr.refresh()
-
-		if ERASE:
-			stdscr.erase()
-		else:
-			stdscr.clear()
 
 def start():
 	parser = optparse.OptionParser()
