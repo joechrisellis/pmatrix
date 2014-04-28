@@ -70,7 +70,7 @@ def start():
 			help="Use stdscr.erase(), which may reduce flicker.")
 	parser.add_option("-l", "--letters", type=int, default=2,
 			help="The number of letters produced per update.")
-	parser.add_option("-u", "--ups", type=int, default=30,
+	parser.add_option("-u", "--ups", type=int, default=15,
 			help="The number of updates to perform per second.")
 	options, args = parser.parse_args()
 
