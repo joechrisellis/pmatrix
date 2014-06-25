@@ -8,7 +8,7 @@ kwargs = {
     "license" : "GPL v2",
     "name" : "pmatrix",
     "packages" : ["pmatrix"],
-    "version" : "V0.0.1",
+    "version" : "V1.0",
 }
 
 setup(**kwargs)
