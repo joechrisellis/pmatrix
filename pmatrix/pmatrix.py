@@ -1,4 +1,5 @@
 from string import printable
+import collections
 import curses
 import optparse
 import random
@@ -14,7 +15,7 @@ COLORS = {
     "YELLOW" : curses.COLOR_YELLOW,
 }
 
-rand_string = lambda c, l: "".join(random.choice(c) for i in xrange(l))
+rand_string = lambda c, l: "".join(random.choice(c) for _ in xrange(l))
 
 def main(stdscr):
     curses.curs_set(0)
@@ -22,12 +23,14 @@ def main(stdscr):
     curses.start_color()
     size = stdscr.getmaxyx()
 
-    back = rand_string(printable.strip(), size[0] * size[1])
-    dispense, visible = [], []
-
+    PMatrix = collections.namedtuple("PMatrix",
+                                ["foreground", "background", "dispense"])
+    matr = PMatrix([], rand_string(printable.strip(), size[0] * size[1]), [])
     delta = 0
     lt = time.time()
+
     while 1:
+
         if ERASE:
             stdscr.erase()
         else:
@@ -45,24 +48,26 @@ def main(stdscr):
                 # pmatrix.  
                 return
 
-            for i in xrange(LETTERS_PER_UPDATE):
-                dispense.append(random.randint(0, size[1] - 1))
+            for _ in xrange(LETTERS_PER_UPDATE):
+                matr.dispense.append(random.randint(0, size[1] - 1))
 
-            for i, c in enumerate(dispense):
-                visible.append([0, c])
-                if not random.randint(0, 5):
-                    del dispense[i]
+            for i, c in enumerate(matr.dispense):
+                matr.foreground.append([0, c])
+                if not random.randint(0, PROBABILITY):
+                    del matr.dispense[i]
 
-            for a, b in enumerate(visible):
+            for a, b in enumerate(matr.foreground):
                 if b[0] < size[0] - 1:
-                    stdscr.addstr(b[0], b[1], back[b[0] * size[0] + b[1]], curses.color_pair(9))
+                    stdscr.addstr(b[0], b[1],
+                                    matr.background[b[0] * size[0] + b[1]],
+                                    curses.color_pair(9))
                     b[0] += 1
                 else:
                     # We cannot simply use `del b`. This is because using del
                     # on the local variable b will only remove its binding
                     # from the local namespace. We have to remove it directly
                     # from the list.  
-                    del visible[a]
+                    del matr.foreground[a]
 
             delta -= 1
             stdscr.refresh()
@@ -79,10 +84,11 @@ def start():
             help="The number of updates to perform per second.")
     options, args = parser.parse_args()
 
-    global COLOR, ERASE, LETTERS_PER_UPDATE, UPDATES_PER_SECOND
+    global COLOR, ERASE, LETTERS_PER_UPDATE, PROBABILITY, UPDATES_PER_SECOND
     COLOR = COLORS.get(options.color.upper(), curses.COLOR_GREEN)
     ERASE = options.erase
     LETTERS_PER_UPDATE = abs(options.letters)
+    PROBABILITY = options.probability - 1
     UPDATES_PER_SECOND = abs(options.ups)
 
     try:
