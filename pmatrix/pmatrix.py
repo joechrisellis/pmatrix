@@ -80,6 +80,8 @@ def start():
             help="Use stdscr.erase(), which may reduce flicker.")
     parser.add_option("-l", "--letters", type=int, default=2,
             help="The number of letters produced per update.")
+    parser.add_option("-p", "--probability", type=int, default=5,
+            help="1/p probability of a dispense point deactivating.")
     parser.add_option("-u", "--ups", type=int, default=15,
             help="The number of updates to perform per second.")
     options, args = parser.parse_args()
