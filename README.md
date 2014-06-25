@@ -1,12 +1,12 @@
 pmatrix
 =======
 
-pmatrix is a cmatrix clone written in Python. It creates the falling text display. It is worth noting that this package will only work on \*nix systems. This is because the Python curses module responsible for terminal control is currently only supported on \*nix systems.
+pmatrix is a cmatrix clone written in Python. It creates the falling text display.
 
 Installation
 ============
 
-Installing pmatrix is easy. If you're running a \*nix system, you can follow these steps:
+Installing pmatrix is easy. It is worth noting that this package will only work on \*nix systems. This is because the Python curses module responsible for terminal control is currently only supported on \*nix systems. With that in mind, if you're running a \*nix system, you can follow these steps:
 
 1. Get the source. `$ git clone https://github.com/jce-devel/pmatrix`
 2. Enter the source directory. `$ cd pmatrix`
@@ -23,4 +23,4 @@ TODO
 ====
 
 * Work on efficiency. You will always have to expect some overhead with Python and accept the fact that pmatrix will never be as fast as cmatrix.
-* Parallelize loops.
+* Parallelize loops (if possible).
