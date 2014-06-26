@@ -96,7 +96,7 @@ def start():
     try:
         while 1:
             curses.wrapper(main)
-    except KeyboardInterrupt:
+    except (EOFError, KeyboardInterrupt):
         exit(0)
 
 if __name__ == "__main__":
