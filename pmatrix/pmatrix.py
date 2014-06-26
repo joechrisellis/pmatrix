@@ -19,7 +19,7 @@ rand_string = lambda c, l: "".join(random.choice(c) for _ in xrange(l))
 
 def main(stdscr):
     curses.curs_set(0)
-    curses.init_pair(9, COLOR, curses.COLOR_BLACK)
+    curses.init_pair(9, FG, BG)
     curses.start_color()
     size = stdscr.getmaxyx()
 
@@ -74,10 +74,12 @@ def main(stdscr):
 
 def start():
     parser = optparse.OptionParser()
-    parser.add_option("-c", "--color", default="green",
+    parser.add_option("-b", "--background", default="black",
             help="The colour of the falling text.")
     parser.add_option("-e", "--erase", action="store_true",
             help="Use stdscr.erase(), which may reduce flicker.")
+    parser.add_option("-f", "--foreground", default="green",
+            help="The colour of the falling text.")
     parser.add_option("-l", "--letters", type=int, default=2,
             help="The number of letters produced per update.")
     parser.add_option("-p", "--probability", type=int, default=5,
@@ -86,9 +88,10 @@ def start():
             help="The number of updates to perform per second.")
     options, args = parser.parse_args()
 
-    global COLOR, ERASE, LETTERS_PER_UPDATE, PROBABILITY, UPDATES_PER_SECOND
-    COLOR = COLORS.get(options.color.upper(), curses.COLOR_GREEN)
+    global BG, ERASE, FG, LETTERS_PER_UPDATE, PROBABILITY, UPDATES_PER_SECOND
     ERASE = options.erase
+    FG = COLORS.get(options.foreground.upper(), curses.COLOR_GREEN)
+    BG = COLORS.get(options.background.upper(), curses.COLOR_BLACK)
     LETTERS_PER_UPDATE = abs(options.letters)
     PROBABILITY = options.probability - 1
     UPDATES_PER_SECOND = abs(options.ups)
