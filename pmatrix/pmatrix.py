@@ -75,17 +75,20 @@ def main(stdscr):
 def start():
     parser = optparse.OptionParser()
     parser.add_option("-b", "--background", default="black",
-            help="The colour of the falling text.")
+            help="The colour of the falling text. (default: %default)")
     parser.add_option("-e", "--erase", action="store_true",
             help="Use stdscr.erase(), which may reduce flicker.")
     parser.add_option("-f", "--foreground", default="green",
-            help="The colour of the falling text.")
+            help="The colour of the falling text. (default: %default)")
     parser.add_option("-l", "--letters", type=int, default=2,
-            help="The number of letters produced per update.")
+            help=("The number of letters produced per update. "
+                  "(default: %default)"))
     parser.add_option("-p", "--probability", type=int, default=5,
-            help="1/p probability of a dispense point deactivating.")
+            help=("1/p probability of a dispense point deactivating. "
+                  "(default: %default)"))
     parser.add_option("-u", "--ups", type=int, default=15,
-            help="The number of updates to perform per second.")
+            help=("The number of updates to perform per second. "
+                  "(default: %default)"))
     options, args = parser.parse_args()
 
     global BG, ERASE, FG, LETTERS_PER_UPDATE, PROBABILITY, UPDATES_PER_SECOND
