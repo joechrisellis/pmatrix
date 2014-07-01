@@ -6,6 +6,7 @@ import random
 import time
 
 COLORS = {
+    "BLACK" : curses.COLOR_BLACK,
     "BLUE" : curses.COLOR_BLUE,
     "CYAN" : curses.COLOR_CYAN,
     "GREEN" : curses.COLOR_GREEN,
