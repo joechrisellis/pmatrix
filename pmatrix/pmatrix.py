@@ -1,7 +1,7 @@
+from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 from string import printable
 import collections
 import curses
-import optparse
 import random
 import time
 
@@ -73,31 +73,29 @@ def main(stdscr):
             stdscr.refresh()
 
 def start():
-    parser = optparse.OptionParser()
-    parser.add_option("-b", "--background", default="black",
-            help="The colour of the falling text. (default: %default)")
-    parser.add_option("-e", "--erase", action="store_true",
+    parser = ArgumentParser(description="Create the matrix falling text.",
+                            formatter_class=ArgumentDefaultsHelpFormatter)
+    parser.add_argument("-b", "--background", default="black",
+            help="The colour of the falling text.")
+    parser.add_argument("-e", "--erase", action="store_true",
             help="Use stdscr.erase(), which may reduce flicker.")
-    parser.add_option("-f", "--foreground", default="green",
-            help="The colour of the falling text. (default: %default)")
-    parser.add_option("-l", "--letters", type=int, default=2,
-            help=("The number of letters produced per update. "
-                  "(default: %default)"))
-    parser.add_option("-p", "--probability", type=int, default=5,
-            help=("1/p probability of a dispense point deactivating. "
-                  "(default: %default)"))
-    parser.add_option("-u", "--ups", type=int, default=15,
-            help=("The number of updates to perform per second. "
-                  "(default: %default)"))
-    options, args = parser.parse_args()
+    parser.add_argument("-f", "--foreground", default="green",
+            help="The colour of the falling text.")
+    parser.add_argument("-l", "--letters", type=int, default=2,
+            help="The number of letters produced per update.")
+    parser.add_argument("-p", "--probability", type=int, default=5,
+            help="1/p probability of a dispense point deactivating.")
+    parser.add_argument("-u", "--ups", type=int, default=15,
+            help="The number of updates to perform per second.")
+    args = parser.parse_args()
 
     global BG, ERASE, FG, LETTERS_PER_UPDATE, PROBABILITY, UPDATES_PER_SECOND
-    ERASE = options.erase
-    FG = COLORS.get(options.foreground.upper(), curses.COLOR_GREEN)
-    BG = COLORS.get(options.background.upper(), curses.COLOR_BLACK)
-    LETTERS_PER_UPDATE = abs(options.letters)
-    PROBABILITY = options.probability - 1
-    UPDATES_PER_SECOND = abs(options.ups)
+    ERASE = args.erase
+    FG = COLORS.get(args.foreground.upper(), curses.COLOR_GREEN)
+    BG = COLORS.get(args.background.upper(), curses.COLOR_BLACK)
+    LETTERS_PER_UPDATE = abs(args.letters)
+    PROBABILITY = args.probability - 1
+    UPDATES_PER_SECOND = abs(args.ups)
 
     try:
         while 1:
