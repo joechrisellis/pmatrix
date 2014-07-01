@@ -20,6 +20,7 @@ rand_string = lambda c, l: "".join(random.choice(c) for _ in xrange(l))
 def main(stdscr):
     curses.curs_set(0)
     curses.init_pair(9, FG, BG)
+    stdscr.bkgd(curses.color_pair(9))
     curses.start_color()
     size = stdscr.getmaxyx()
 
@@ -75,6 +76,7 @@ def main(stdscr):
 def start():
     parser = ArgumentParser(description="Create the matrix falling text.",
                             formatter_class=ArgumentDefaultsHelpFormatter)
+
     parser.add_argument("-b", "--background", default="black",
             help="The colour of the falling text.")
     parser.add_argument("-e", "--erase", action="store_true",
