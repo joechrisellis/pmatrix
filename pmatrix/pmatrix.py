@@ -33,10 +33,10 @@ def main(stdscr):
 
     while 1:
 
-        if ERASE:
-            stdscr.erase()
-        else:
+        if CLEAR:
             stdscr.clear()
+        else:
+            stdscr.erase()
 
         now = time.time()
         delta += (now - lt) * UPDATES_PER_SECOND
@@ -80,8 +80,8 @@ def start():
 
     parser.add_argument("-b", "--background", default="black",
             help="The colour of the falling text.")
-    parser.add_argument("-e", "--erase", action="store_true",
-            help="Use stdscr.erase(), which may reduce flicker.")
+    parser.add_argument("-c", "--clear", action="store_true",
+            help="Use stdscr.clear() instead of stdscr.erase().")
     parser.add_argument("-f", "--foreground", default="green",
             help="The colour of the falling text.")
     parser.add_argument("-l", "--letters", type=int, default=2,
@@ -92,8 +92,8 @@ def start():
             help="The number of updates to perform per second.")
     args = parser.parse_args()
 
-    global BG, ERASE, FG, LETTERS_PER_UPDATE, PROBABILITY, UPDATES_PER_SECOND
-    ERASE = args.erase
+    global BG, CLEAR, FG, LETTERS_PER_UPDATE, PROBABILITY, UPDATES_PER_SECOND
+    CLEAR = args.clear
     FG = COLORS.get(args.foreground.upper(), curses.COLOR_GREEN)
     BG = COLORS.get(args.background.upper(), curses.COLOR_BLACK)
     LETTERS_PER_UPDATE = abs(args.letters)
