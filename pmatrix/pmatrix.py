@@ -3,6 +3,7 @@ from string import printable
 import collections
 import curses
 import random
+import sys
 import time
 
 COLORS = {
@@ -104,7 +105,7 @@ def start():
         while 1:
             curses.wrapper(main)
     except (EOFError, KeyboardInterrupt):
-        exit(0)
+        sys.exit(0)
 
 if __name__ == "__main__":
     start()
