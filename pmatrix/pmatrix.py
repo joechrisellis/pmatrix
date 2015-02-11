@@ -1,10 +1,17 @@
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 from string import printable
 import collections
-import curses
 import random
 import sys
 import time
+
+try:
+    import curses
+except ImportError:
+    print "Oops!"
+    print "pmatrix relies on curses for terminal rendering. It appears as though you do not have the curses library."
+    print "Unable to run. Exiting..."
+    exit(1)
 
 COLORS = {
     "BLACK" : curses.COLOR_BLACK,
@@ -76,6 +83,7 @@ def main(stdscr):
             stdscr.refresh()
 
 def start():
+
     parser = ArgumentParser(description="Create the matrix falling text.",
                             formatter_class=ArgumentDefaultsHelpFormatter)
 
