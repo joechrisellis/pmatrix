@@ -28,7 +28,10 @@ if you're running a \*nix system, you can follow these steps:
 pmatrix in Action
 =================
 
-![](images/action.png)
+![pmatrix --help](http://i.imgur.com/1sQNm6Q.png)
+![pmatrix -f red](http://i.imgur.com/a6PWnER.png)
+![pmatrix -f white -b black](http://i.imgur.com/veXrhYA.png)
+![pmatrix -p 1](http://i.imgur.com/dKBmndR.png)
 
 TODO
 ====
