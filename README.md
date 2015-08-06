@@ -29,9 +29,16 @@ pmatrix in Action
 =================
 
 ![pmatrix --help](http://i.imgur.com/1sQNm6Q.png)
+`pmatrix --help`
+
 ![pmatrix -f red](http://i.imgur.com/a6PWnER.png)
+`pmatrix -f red`
+
 ![pmatrix -f white -b black](http://i.imgur.com/veXrhYA.png)
+`pmatrix -f white -b black`
+
 ![pmatrix -p 1](http://i.imgur.com/dKBmndR.png)
+`pmatrix -p 1`
 
 TODO
 ====
