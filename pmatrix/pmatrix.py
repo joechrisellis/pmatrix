@@ -24,7 +24,12 @@ COLORS = {
     "YELLOW" : curses.COLOR_YELLOW,
 }
 
-rand_string = lambda c, l: "".join(random.choice(c) for _ in xrange(l))
+def rand_string(character_set, length):
+    """Returns a random string.
+        character_set -- the characters to choose from.
+        length        -- the length of the string.
+    """
+    return "".join(random.choice(character_set) for _ in xrange(length))
 
 def main(stdscr):
     curses.curs_set(0)
