@@ -5,12 +5,12 @@ import random
 import sys
 import time
 
+ERR_CURSES_MISSING = "pmatrix requires curses for terminal rendering; exiting."
+
 try:
     import curses
 except ImportError:
-    print "Oops!"
-    print "pmatrix relies on curses for terminal rendering. It appears as though you do not have the curses library."
-    print "Unable to run. Exiting..."
+    print ERR_CURSES_MISSING
     exit(1)
 
 COLORS = {
