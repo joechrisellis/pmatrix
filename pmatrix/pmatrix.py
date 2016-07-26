@@ -101,7 +101,7 @@ def start():
     parser.add_argument("-l", "--letters", type=int, default=2,
             help="The number of letters produced per update.")
     parser.add_argument("-p", "--probability", type=int, default=5,
-            help="1/p probability of a dispense point deactivating.")
+            help="1/p probability of a dispense point deactivating each tick.")
     parser.add_argument("-u", "--ups", type=int, default=15,
             help="The number of updates to perform per second.")
     args = parser.parse_args()
