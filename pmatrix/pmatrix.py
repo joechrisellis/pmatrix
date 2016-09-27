@@ -5,14 +5,13 @@ import random
 import sys
 import time
 
-ERR_CURSES_MISSING = "pmatrix requires curses for terminal rendering; exiting."
-
 try:
     import curses
 except ImportError:
-    print ERR_CURSES_MISSING
+    print "pmatrix requires curses for terminal rendering; exiting."
     exit(1)
 
+# Colors that the user may set as foreground/background.
 COLORS = {
     "BLACK" : curses.COLOR_BLACK,
     "BLUE" : curses.COLOR_BLUE,
@@ -40,6 +39,8 @@ def main(stdscr):
 
     PMatrix = collections.namedtuple("PMatrix",
                                 ["foreground", "background", "dispense"])
+
+    # Create a matrix of random letters with the dimensions of the terminal win.
     matr = PMatrix([], rand_string(printable.strip(), size[0] * size[1]), [])
     delta = 0
     lt = time.time()
