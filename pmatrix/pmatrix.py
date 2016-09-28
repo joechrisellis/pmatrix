@@ -31,18 +31,22 @@ def rand_string(character_set, length):
     return "".join(random.choice(character_set) for _ in xrange(length))
 
 def main(stdscr):
+
     curses.curs_set(0)
     curses.init_pair(9, FG, BG)
     stdscr.bkgd(curses.color_pair(9))
     curses.start_color()
     size = stdscr.getmaxyx()
 
-    PMatrix = collections.namedtuple("PMatrix",
-                                ["foreground", "background", "dispense"])
+    # background is a matrix of the actual letters (not lit up) -- the underlay.
+    # foreground is a binary matrix representing the position of lit letters -- the overlay.
+    # dispense is where new 'streams' of lit letters appear from.
+    background = rand_string(printable.strip(), size[0] * size[1])
+    foreground = []
+    dispense   = []
 
-    # Create a matrix of random letters with the dimensions of the terminal win.
-    matr = PMatrix([], rand_string(printable.strip(), size[0] * size[1]), [])
     delta = 0
+    bg_refresh_counter = random.randint(3, 7)
     lt = time.time()
 
     while 1:
@@ -65,17 +69,17 @@ def main(stdscr):
                 return
 
             for _ in xrange(LETTERS_PER_UPDATE):
-                matr.dispense.append(random.randint(0, size[1] - 1))
+                dispense.append(random.randint(0, size[1] - 1))
 
-            for i, c in enumerate(matr.dispense):
-                matr.foreground.append([0, c])
+            for i, c in enumerate(dispense):
+                foreground.append([0, c])
                 if not random.randint(0, PROBABILITY):
-                    del matr.dispense[i]
+                    del dispense[i]
 
-            for a, b in enumerate(matr.foreground):
+            for a, b in enumerate(foreground):
                 if b[0] < size[0] - 1:
                     stdscr.addstr(b[0], b[1],
-                                    matr.background[b[0] * size[0] + b[1]],
+                                    background[b[0] * size[0] + b[1]],
                                     curses.color_pair(9))
                     b[0] += 1
                 else:
@@ -83,7 +87,12 @@ def main(stdscr):
                     # on the local variable b will only remove its binding
                     # from the local namespace. We have to remove it directly
                     # from the list.  
-                    del matr.foreground[a]
+                    del foreground[a]
+
+            bg_refresh_counter -= 1
+            if bg_refresh_counter <= 0:
+                background = rand_string(printable.strip(), size[0] * size[1])
+                bg_refresh_counter = random.randint(3, 7)
 
             delta -= 1
             stdscr.refresh()
