@@ -8,7 +8,7 @@ import time
 try:
     import curses
 except ImportError:
-    print "pmatrix requires curses for terminal rendering; exiting."
+    print("pmatrix requires curses for terminal rendering; exiting.")
     exit(1)
 
 # Colors that the user may set as foreground/background.
@@ -28,7 +28,7 @@ def rand_string(character_set, length):
         character_set -- the characters to choose from.
         length        -- the length of the string.
     """
-    return "".join(random.choice(character_set) for _ in xrange(length))
+    return "".join(random.choice(character_set) for _ in range(length))
 
 def main(stdscr):
 
@@ -68,7 +68,7 @@ def main(stdscr):
                 # pmatrix.  
                 return
 
-            for _ in xrange(LETTERS_PER_UPDATE):
+            for _ in range(LETTERS_PER_UPDATE):
                 dispense.append(random.randint(0, size[1] - 1))
 
             for i, c in enumerate(dispense):
